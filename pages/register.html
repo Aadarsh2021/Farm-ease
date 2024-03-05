@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm-Ease - Register</title>
+    <link rel="stylesheet" href="../css/register.css">
+</head>
+<body>
+    <header>
+        <div class="logo_container">
+            <a href="../index.html"><img class="myntra_home" src="images/farmease_logo.jpg" alt="Myntra Home"></a>
+        </div>
+        <nav class="nav_bar">
+            <a href="../index.html">Home</a>
+            <a href="#">About</a>
+            <a href="#">T & C</a>
+        </nav>
+        <div class="search_bar">
+            <span class="material-symbols-outlined search_icon">search</span>
+            <input class="search_input" placeholder="Search for products, brands and more">
+        </div>
+        <div class="action_bar">
+            <!-- Action bar content from the main page -->
+        </div>
+    </header>
+    
+    <main>
+        <h2>Register</h2>
+        <form id="register-form" class="register-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit" class="btn-bag">Register</button>
+            <button type="button" class="login-button" onclick="redirectToLogin()">Login (Already have an account)</button>
+        </form>
+    </main>
+
+    <footer>
+        <div class="footer_container">
+        <div class="copyright">
+            © 2024 www.Farm-ease.com. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="../scripts/register.js"></script>
+</body>
+</html>

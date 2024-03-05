@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        /* CSS Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+        header {
+            background-color: #199214;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .logo {
+            width: 50px; /* Adjust the width as needed */
+            height: 50px;
+            padding: 10px;
+        }
+        .nav_bar {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .nav_bar a {
+            font-size: 16px;
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s ease;
+        }
+        .nav_bar a:hover {
+            border-bottom: 2px solid #fff;
+        }
+        .search_bar {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .search_input {
+            padding: 8px;
+            border: 2px solid #199214;
+            border-radius: 20px;
+            width: 300px;
+            outline: none;
+            font-size: 16px;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .action-buttons button,
+        .action-buttons a {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #199214;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .action-buttons button:hover,
+        .action-buttons a:hover {
+            background-color: #135a0a;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .dashboard-content {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .dashboard-content h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .user-details label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .user-details p {
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo_container">
+            <a href="../index.html"><img class="logo" src="images/farmease_logo.jpg" alt="Myntra Home"></a>
+        </div>
+        <nav class="nav_bar">
+            <a href="../index.html">Home</a>
+            <a href="#">About</a>
+            <a href="#">T & C</a>
+        </nav>
+        <div class="search_bar">
+            <input class="search_input" placeholder="Search for products, brands and more">
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div class="dashboard-content">
+                <h2>Welcome to Your Dashboard</h2>
+                <div class="user-details">
+                    <label>Name:</label>
+                    <p id="user-name">John Doe</p>
+                    <label>Email:</label>
+                    <p id="user-email">john@example.com</p>
+                    <label>Address:</label>
+                    <p id="user-address">123 Main Street, City, Country</p>
+                    <label>Phone:</label>
+                    <p id="user-phone">+1234567890</p>
+                </div>
+                <div class="action-buttons">
+                    <button onclick="editProfile()">Edit Profile</button>
+                    <a href="myorders.html" id="view-orders">View Orders</a>
+                    <button onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </div>
+            <p>&copy; 2024 User Dashboard. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function editProfile() {
+            var userDetails = document.querySelectorAll('.user-details p');
+            userDetails.forEach(function(detail) {
+                var text = detail.innerText;
+                var input = document.createElement('input');
+                input.value = text;
+                input.setAttribute('type', 'text');
+                detail.innerHTML = '';
+                detail.appendChild(input);
+            });
+
+            var editButton = document.querySelector('.action-buttons button');
+            editButton.style.display = 'none';
+
+            var saveButton = document.createElement('button');
+            saveButton.textContent = 'Save Changes';
+            saveButton.style.padding = '10px 20px';
+            saveButton.style.backgroundColor = '#28a745';
+            saveButton.style.color = '#fff';
+            saveButton.style.border = 'none';
+            saveButton.style.borderRadius = '5px';
+            saveButton.style.cursor = 'pointer';
+            saveButton.style.marginRight = '10px';
+            saveButton.addEventListener('click', function() {
+                var updatedUserDetails = document.querySelectorAll('.user-details input');
+                updatedUserDetails.forEach(function(updatedDetail, index) {
+                    userDetails[index].innerText = updatedDetail.value;
+                });
+
+                editButton.style.display = 'inline-block';
+                saveButton.remove();
+            });
+
+            var actionButtons = document.querySelector('.action-buttons');
+            actionButtons.insertBefore(saveButton, actionButtons.childNodes[0]);
+        }
+
+        function logout() {
+            // Clear user data from localStorage
+            localStorage.removeItem('userData');
+            // Redirect to login page
+            window.location.href = 'C://Users//thaku//OneDrive//Desktop//New folder//New folder//clone//index.html';
+        }
+
+        // Load user data from local storage (assuming it's already saved during login)
+        window.onload = function() {
+            var userData = JSON.parse(localStorage.getItem('userData'));
+            if (userData) {
+                document.getElementById('user-name').innerText = userData.name;
+                document.getElementById('user-email').innerText = userData.email;
+                document.getElementById('user-address').innerText = userData.address;
+                document.getElementById('user-phone').innerText = userData.phone;
+            }
+        };
+    </script>
+</body>
+</html>
