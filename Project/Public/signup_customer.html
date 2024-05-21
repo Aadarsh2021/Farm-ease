@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Signup - Farm-Ease</title>
+    <link rel="stylesheet" href="/css/signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+</head>
+<body class="bg-gradient-to-br from-green-500 to-blue-500">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="max-w-md w-full p-6 bg-white dark:bg-zinc-700 rounded-lg shadow-lg flex flex-col items-center justify-center">
+            <h1 class="text-lg font-bold mb-4 text-center">Customer Signup</h1>
+            <form id="signup-form" action="/api/signup/customer" method="post" onsubmit="return validateForm()">
+                <!-- Customer-specific input fields -->
+                <div class="form-group">
+                    <label for="full-name">Full Name:</label>
+                    <input type="text" id="full-name" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+                <!-- Common input fields for both producer and customer -->
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <p id="password-info" class="text-sm text-gray-500">Password must be at least 8 characters long.</p>
+                </div>
+                <!-- Error message display -->
+                <div id="error-message" class="text-red-500"></div>
+                <!-- Submit button -->
+                <button type="submit" class="button customer-button">Signup as Customer</button>
+            </form>
+            <p class="mt-4">Already registered? <a href="signin.html" class="text-blue-500">Sign in here</a></p>
+        </div>
+    </div>
+    <script src="/js/signup_customer.js"></script>
+</body>
+</html>

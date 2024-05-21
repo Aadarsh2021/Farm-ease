@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/myorders.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo_container">
+            <a href="../pages/home.html"><img class="logo" src="{{ url_for('static', filename='images/farmease_logo.jpg') }}" alt="Farm-Ease"></a>
+        </div>
+        <nav class="nav_bar">
+            <a href="../pages/home.html">Home</a>
+            <a href="#">About</a>
+            <a href="#">T & C</a>
+        </nav>
+        <div class="search_bar">
+            <input class="search_input" placeholder="Search for products, brands and more">
+        </div>
+    </header>
+    <div class="container">
+        <h1>My Orders</h1>
+        <div class="order-item">
+            <p><strong>Order ID:</strong> #12345</p>
+            <p><strong>Date:</strong> January 1, 2024</p>
+            <p><strong>Total Amount:</strong> Rs 100.00</p>
+            <p><strong>Status:</strong> Delivered</p>
+        </div>
+        <div class="order-item">
+            <p><strong>Order ID:</strong> #67890</p>
+            <p><strong>Date:</strong> January 5, 2024</p>
+            <p><strong>Total Amount:</strong> Rs 150.00</p>
+            <p><strong>Status:</strong> In Progress</p>
+        </div>
+        <!-- Add more order items here -->
+    </div>
+    <script src="{{ url_for('static', filename='scripts/myorders.js') }}"></script>
+</body>
+</html>

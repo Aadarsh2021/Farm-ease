@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Farm-Ease</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+    <header>
+        <div class="logo_container">
+            <a href="home.html"><img class="farmease_logo" src="/images/farmease_logo.jpg" alt="Farm-Ease"></a>
+        </div>
+    </header>
+
+    <main>
+        <div class="checkout-container">
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <div id="order-items-list"></div>
+                <div class="price-item">Total: <span id="total-amount"></span></div>
+                <div class="price-item">Convenience Fee: <span>₹99</span></div>
+                <div class="price-item price-footer">Final Amount: <span id="final-amount"></span></div>
+            </div>
+
+            <div class="delivery-details">
+                <h2>Delivery Details</h2>
+                <input type="text" id="delivery-address" placeholder="Enter delivery address">
+            </div>
+
+            <div class="payment-section">
+                <h2>Payment</h2>
+                <button id="connect-metamask">Connect MetaMask</button>
+                <button id="pay-with-metamask">Pay with MetaMask</button>
+                <div id="transaction-status"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="/js/bag.js"></script>
+    <script src="/js/checkout.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const connectButton = document.getElementById('connect-metamask');
+
+            connectButton.addEventListener('click', function() {
+                if (window.ethereum) {
+                    ethereum.request({ method: 'eth_requestAccounts' })
+                        .then(function(accounts) {
+                            console.log('Connected to MetaMask:', accounts[0]);
+                        })
+                        .catch(function(error) {
+                            console.error('Error connecting to MetaMask:', error.message);
+                        });
+                } else {
+                    console.error('MetaMask extension not detected');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

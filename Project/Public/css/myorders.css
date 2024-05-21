@@ -1,0 +1,86 @@
+/* CSS Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0; /* Added to remove default margin */
+    padding: 0; /* Added to remove default padding */
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    height: 80px;
+    border-bottom: 1px solid #b6b1b1;
+}
+
+.logo_container {
+    /* Remove margin-left and margin-right */
+    text-align: center;
+}
+
+.logo_container img {
+    width: 75px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.nav_bar {
+    display: flex;
+    min-width: 500px;
+    justify-content: space-evenly;
+}
+
+.nav_bar a {
+    font-size: 14px;
+    letter-spacing: .3px;
+    color: #282c3f;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 28px 0;
+    border-bottom: 5px solid #ffffff;
+}
+
+.nav_bar a:hover {
+    border-bottom: 4px solid #f54e77;
+}
+
+.search_bar {
+    height: 40px;
+    min-width: 200px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+
+.search_input {
+    color: #696e79;
+    background-color: #f5f5f6;
+    flex-grow: 1;
+    height: 40px;
+    border: 0;
+    border-radius: 0 4px 4px 0;
+    padding-left: 10px; /* Added padding */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.order-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.order-item p {
+    margin-bottom: 10px;
+}

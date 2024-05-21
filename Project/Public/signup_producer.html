@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producer Signup</title>
+    <link rel="stylesheet" href="/css/signupp.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="home.html"><img class="farmease-logo" src="/images/farmease_logo.jpg" alt="Farm-Ease Home"></a>
+            <h1>Farm-Ease</h1>
+        </div>
+        <nav class="nav-bar">
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="t&c.html">T & C</a>
+        </nav>        
+    </header>
+    <div class="container">
+        <h2 class="heading">Producer Signup</h2>
+        <!-- Producer-specific input fields -->
+        <form id="producer-form" onsubmit="return saveUserDataAndRedirect('producer')">
+            <div class="form-group">
+                <label for="company-name">Person Name:</label>
+                <input type="text" id="company-name" name="company-name" required>
+            </div>
+            <div class="form-group">
+                <label for="business-type">Business Type:</label>
+                <select id="business-type" name="business-type" required>
+                    <option value="farm">Farm</option>
+                    <option value="dairy">Dairy</option>
+                    <option value="orchard">Orchard</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <!-- Common input fields for both producer and customer -->
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="button producer-button">Signup as Producer</button>
+        </form>
+        <p>Already registered <span><b><a href="signin.html"><u>Signin</u></a></b></span></p>
+    </div>
+    
+    <footer>
+        <div class="copyright">
+            © 2024 www.Farm-ease.com. All rights reserved.
+        </div>
+    </footer>
+    <script>
+        function saveUserDataAndRedirect(userType) {
+            const formData = new FormData();
+            formData.append("userType", userType);
+            formData.append("email", document.getElementById("email").value);
+            formData.append("password", document.getElementById("password").value);
+            
+            // Use fetch or any other AJAX library to send the form data to the backend
+            fetch("/api/signup", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "signin.html";
+                } else {
+                    console.error("Failed to sign up user");
+                }
+            })
+            .catch(error => {
+                console.error("Error signing up user:", error);
+            });
+
+            return false; // Prevent form submission
+        }
+    </script>
+</body>
+</html>

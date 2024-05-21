@@ -1,0 +1,84 @@
+/* Reset styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+/* Header styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    height: 80px;
+    padding: 0 20px;
+    border-bottom: 1px solid #b6b1b1;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-container h1 {
+    margin-left: 10px;
+}
+
+.logo-container img {
+    width: 70px;
+    height: auto;
+}
+
+.nav-bar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin-right: 20px;
+}
+
+.nav-bar a:hover {
+    color: #f54e77;
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+}
+
+.terms-content h1 {
+    margin-bottom: 20px;
+}
+
+.terms-content h2 {
+    margin-top: 20px;
+}
+
+.terms-content h3 {
+    margin-top: 10px;
+}
+
+.terms-content p {
+    margin-bottom: 10px;
+}
+
+/* Footer styles */
+footer {
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.footer-column h3 {
+    margin-bottom: 10px;
+}
+
+.footer-column p {
+    margin-bottom: 5px;
+}
+
+.copyright {
+    margin-top: 20px;
+    text-align: center;
+    color: #666;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmEase - Sign In</title>
+    <link rel="stylesheet" href="/css/signin.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="home.html"><img class="farmease-logo" src="/images/farmease_logo.jpg" alt="Farm-Ease Home"></a>
+        </div>
+        <nav class="nav-bar">
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="t&c.html">T & C</a>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <h2 class="heading">Sign In to FarmEase</h2>
+            <div class="signin-form">
+                <form id="signin-form" action="/api/signin" method="POST" class="form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="button">Sign In</button>
+                </form>
+                <p align_content="center">Not Registered<span><b><a href="signup_options.html">Signup</a></b></span></p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="copyright">
+            © 2024 www.Farm-ease.com. All rights reserved.
+        </div>
+    </footer>
+    <script src="/js/signin.js"></script>
+</body>
+</html>
