@@ -22,6 +22,9 @@ import { Order } from "./Order";
 import { OrderFindManyArgs } from "./OrderFindManyArgs";
 import { OrderWhereUniqueInput } from "./OrderWhereUniqueInput";
 import { OrderUpdateInput } from "./OrderUpdateInput";
+import { PurchaseFindManyArgs } from "../../purchase/base/PurchaseFindManyArgs";
+import { Purchase } from "../../purchase/base/Purchase";
+import { PurchaseWhereUniqueInput } from "../../purchase/base/PurchaseWhereUniqueInput";
 
 export class OrderControllerBase {
   constructor(protected readonly service: OrderService) {}
@@ -186,5 +189,95 @@ export class OrderControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Get("/:id/purchases")
+  @ApiNestedQuery(PurchaseFindManyArgs)
+  async findPurchases(
+    @common.Req() request: Request,
+    @common.Param() params: OrderWhereUniqueInput
+  ): Promise<Purchase[]> {
+    const query = plainToClass(PurchaseFindManyArgs, request.query);
+    const results = await this.service.findPurchases(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+
+        order: {
+          select: {
+            id: true,
+          },
+        },
+
+        product: {
+          select: {
+            id: true,
+          },
+        },
+
+        purchaseDate: true,
+        quantity: true,
+        totalPrice: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/purchases")
+  async connectPurchases(
+    @common.Param() params: OrderWhereUniqueInput,
+    @common.Body() body: PurchaseWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      purchases: {
+        connect: body,
+      },
+    };
+    await this.service.updateOrder({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/purchases")
+  async updatePurchases(
+    @common.Param() params: OrderWhereUniqueInput,
+    @common.Body() body: PurchaseWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      purchases: {
+        set: body,
+      },
+    };
+    await this.service.updateOrder({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/purchases")
+  async disconnectPurchases(
+    @common.Param() params: OrderWhereUniqueInput,
+    @common.Body() body: PurchaseWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      purchases: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateOrder({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

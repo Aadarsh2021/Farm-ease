@@ -16,6 +16,7 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
 import { OrderListRelationFilter } from "../../order/base/OrderListRelationFilter";
+import { ProfileListRelationFilter } from "../../profile/base/ProfileListRelationFilter";
 import { SalesListRelationFilter } from "../../sales/base/SalesListRelationFilter";
 
 @InputType()
@@ -75,6 +76,18 @@ class FarmerWhereInput {
     nullable: true,
   })
   phone?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProfileListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => ProfileListRelationFilter)
+  @IsOptional()
+  @Field(() => ProfileListRelationFilter, {
+    nullable: true,
+  })
+  profiles?: ProfileListRelationFilter;
 
   @ApiProperty({
     required: false,

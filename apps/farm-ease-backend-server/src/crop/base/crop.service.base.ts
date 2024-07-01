@@ -10,7 +10,11 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "../../prisma/prisma.service";
-import { Prisma, Crop as PrismaCrop } from "@prisma/client";
+import {
+  Prisma,
+  Crop as PrismaCrop,
+  Product as PrismaProduct,
+} from "@prisma/client";
 
 export class CropServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -33,5 +37,16 @@ export class CropServiceBase {
   }
   async deleteCrop(args: Prisma.CropDeleteArgs): Promise<PrismaCrop> {
     return this.prisma.crop.delete(args);
+  }
+
+  async findProducts(
+    parentId: string,
+    args: Prisma.ProductFindManyArgs
+  ): Promise<PrismaProduct[]> {
+    return this.prisma.crop
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .products(args);
   }
 }

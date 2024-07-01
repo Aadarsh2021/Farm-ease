@@ -10,6 +10,7 @@ import {
 } from "react-admin";
 
 import { OrderTitle } from "../order/OrderTitle";
+import { ProfileTitle } from "../profile/ProfileTitle";
 import { SalesTitle } from "../sales/SalesTitle";
 
 export const FarmerEdit = (props: EditProps): React.ReactElement => {
@@ -27,6 +28,14 @@ export const FarmerEdit = (props: EditProps): React.ReactElement => {
           <SelectArrayInput optionText={OrderTitle} />
         </ReferenceArrayInput>
         <TextInput label="Phone" source="phone" />
+        <ReferenceArrayInput
+          source="profiles"
+          reference="Profile"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={ProfileTitle} />
+        </ReferenceArrayInput>
         <ReferenceArrayInput
           source="salesItems"
           reference="Sales"

@@ -19,6 +19,7 @@ import {
 } from "class-validator";
 import { OrderCreateNestedManyWithoutFarmersInput } from "./OrderCreateNestedManyWithoutFarmersInput";
 import { Type } from "class-transformer";
+import { ProfileCreateNestedManyWithoutFarmersInput } from "./ProfileCreateNestedManyWithoutFarmersInput";
 import { SalesCreateNestedManyWithoutFarmersInput } from "./SalesCreateNestedManyWithoutFarmersInput";
 
 @InputType()
@@ -69,6 +70,18 @@ class FarmerCreateInput {
     nullable: true,
   })
   phone?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProfileCreateNestedManyWithoutFarmersInput,
+  })
+  @ValidateNested()
+  @Type(() => ProfileCreateNestedManyWithoutFarmersInput)
+  @IsOptional()
+  @Field(() => ProfileCreateNestedManyWithoutFarmersInput, {
+    nullable: true,
+  })
+  profiles?: ProfileCreateNestedManyWithoutFarmersInput;
 
   @ApiProperty({
     required: false,

@@ -22,6 +22,8 @@ import { UpdateFarmerArgs } from "./UpdateFarmerArgs";
 import { DeleteFarmerArgs } from "./DeleteFarmerArgs";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
+import { ProfileFindManyArgs } from "../../profile/base/ProfileFindManyArgs";
+import { Profile } from "../../profile/base/Profile";
 import { SalesFindManyArgs } from "../../sales/base/SalesFindManyArgs";
 import { Sales } from "../../sales/base/Sales";
 import { FarmerService } from "../farmer.service";
@@ -103,6 +105,20 @@ export class FarmerResolverBase {
     @graphql.Args() args: OrderFindManyArgs
   ): Promise<Order[]> {
     const results = await this.service.findOrders(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @graphql.ResolveField(() => [Profile], { name: "profiles" })
+  async findProfiles(
+    @graphql.Parent() parent: Farmer,
+    @graphql.Args() args: ProfileFindManyArgs
+  ): Promise<Profile[]> {
+    const results = await this.service.findProfiles(parent.id, args);
 
     if (!results) {
       return [];

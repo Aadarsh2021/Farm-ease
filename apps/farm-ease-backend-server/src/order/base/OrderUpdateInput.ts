@@ -21,6 +21,7 @@ import {
   Max,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { PurchaseUpdateManyWithoutOrdersInput } from "./PurchaseUpdateManyWithoutOrdersInput";
 
 @InputType()
 class OrderUpdateInput {
@@ -46,6 +47,18 @@ class OrderUpdateInput {
     nullable: true,
   })
   orderDate?: Date | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => PurchaseUpdateManyWithoutOrdersInput,
+  })
+  @ValidateNested()
+  @Type(() => PurchaseUpdateManyWithoutOrdersInput)
+  @IsOptional()
+  @Field(() => PurchaseUpdateManyWithoutOrdersInput, {
+    nullable: true,
+  })
+  purchases?: PurchaseUpdateManyWithoutOrdersInput;
 
   @ApiProperty({
     required: false,

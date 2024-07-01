@@ -10,10 +10,12 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "../../prisma/prisma.service";
+
 import {
   Prisma,
   Farmer as PrismaFarmer,
   Order as PrismaOrder,
+  Profile as PrismaProfile,
   Sales as PrismaSales,
 } from "@prisma/client";
 
@@ -51,6 +53,17 @@ export class FarmerServiceBase {
         where: { id: parentId },
       })
       .orders(args);
+  }
+
+  async findProfiles(
+    parentId: string,
+    args: Prisma.ProfileFindManyArgs
+  ): Promise<PrismaProfile[]> {
+    return this.prisma.farmer
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .profiles(args);
   }
 
   async findSalesItems(

@@ -19,6 +19,7 @@ import {
 } from "class-validator";
 import { OrderUpdateManyWithoutFarmersInput } from "./OrderUpdateManyWithoutFarmersInput";
 import { Type } from "class-transformer";
+import { ProfileUpdateManyWithoutFarmersInput } from "./ProfileUpdateManyWithoutFarmersInput";
 import { SalesUpdateManyWithoutFarmersInput } from "./SalesUpdateManyWithoutFarmersInput";
 
 @InputType()
@@ -69,6 +70,18 @@ class FarmerUpdateInput {
     nullable: true,
   })
   phone?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProfileUpdateManyWithoutFarmersInput,
+  })
+  @ValidateNested()
+  @Type(() => ProfileUpdateManyWithoutFarmersInput)
+  @IsOptional()
+  @Field(() => ProfileUpdateManyWithoutFarmersInput, {
+    nullable: true,
+  })
+  profiles?: ProfileUpdateManyWithoutFarmersInput;
 
   @ApiProperty({
     required: false,

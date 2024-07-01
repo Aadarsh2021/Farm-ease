@@ -20,6 +20,8 @@ import { CropFindUniqueArgs } from "./CropFindUniqueArgs";
 import { CreateCropArgs } from "./CreateCropArgs";
 import { UpdateCropArgs } from "./UpdateCropArgs";
 import { DeleteCropArgs } from "./DeleteCropArgs";
+import { ProductFindManyArgs } from "../../product/base/ProductFindManyArgs";
+import { Product } from "../../product/base/Product";
 import { CropService } from "../crop.service";
 @graphql.Resolver(() => Crop)
 export class CropResolverBase {
@@ -85,5 +87,19 @@ export class CropResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [Product], { name: "products" })
+  async findProducts(
+    @graphql.Parent() parent: Crop,
+    @graphql.Args() args: ProductFindManyArgs
+  ): Promise<Product[]> {
+    const results = await this.service.findProducts(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 }

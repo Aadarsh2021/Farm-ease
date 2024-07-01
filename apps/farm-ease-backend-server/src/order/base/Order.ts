@@ -22,6 +22,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { Farmer } from "../../farmer/base/Farmer";
+import { Purchase } from "../../purchase/base/Purchase";
 
 @ObjectType()
 class Order {
@@ -60,6 +61,15 @@ class Order {
     nullable: true,
   })
   orderDate!: Date | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Purchase],
+  })
+  @ValidateNested()
+  @Type(() => Purchase)
+  @IsOptional()
+  purchases?: Array<Purchase>;
 
   @ApiProperty({
     required: false,

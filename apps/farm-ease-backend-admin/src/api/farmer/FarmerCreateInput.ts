@@ -1,4 +1,5 @@
 import { OrderCreateNestedManyWithoutFarmersInput } from "./OrderCreateNestedManyWithoutFarmersInput";
+import { ProfileCreateNestedManyWithoutFarmersInput } from "./ProfileCreateNestedManyWithoutFarmersInput";
 import { SalesCreateNestedManyWithoutFarmersInput } from "./SalesCreateNestedManyWithoutFarmersInput";
 
 export type FarmerCreateInput = {
@@ -6,5 +7,6 @@ export type FarmerCreateInput = {
   name?: string | null;
   orders?: OrderCreateNestedManyWithoutFarmersInput;
   phone?: string | null;
+  profiles?: ProfileCreateNestedManyWithoutFarmersInput;
   salesItems?: SalesCreateNestedManyWithoutFarmersInput;
 };

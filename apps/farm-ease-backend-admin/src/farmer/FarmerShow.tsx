@@ -40,6 +40,29 @@ export const FarmerShow = (props: ShowProps): React.ReactElement => {
           </Datagrid>
         </ReferenceManyField>
         <ReferenceManyField
+          reference="Profile"
+          target="farmerId"
+          label="Profiles"
+        >
+          <Datagrid rowClick="show">
+            <TextField label="Address" source="address" />
+            <DateField source="createdAt" label="Created At" />
+            <TextField label="DateOfBirth" source="dateOfBirth" />
+            <ReferenceField
+              label="Farmer"
+              source="farmer.id"
+              reference="Farmer"
+            >
+              <TextField source={FARMER_TITLE_FIELD} />
+            </ReferenceField>
+            <TextField label="FirstName" source="firstName" />
+            <TextField label="Gender" source="gender" />
+            <TextField label="ID" source="id" />
+            <TextField label="LastName" source="lastName" />
+            <DateField source="updatedAt" label="Updated At" />
+          </Datagrid>
+        </ReferenceManyField>
+        <ReferenceManyField
           reference="Sales"
           target="farmerId"
           label="SalesItems"

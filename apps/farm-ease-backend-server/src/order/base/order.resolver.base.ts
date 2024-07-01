@@ -20,6 +20,8 @@ import { OrderFindUniqueArgs } from "./OrderFindUniqueArgs";
 import { CreateOrderArgs } from "./CreateOrderArgs";
 import { UpdateOrderArgs } from "./UpdateOrderArgs";
 import { DeleteOrderArgs } from "./DeleteOrderArgs";
+import { PurchaseFindManyArgs } from "../../purchase/base/PurchaseFindManyArgs";
+import { Purchase } from "../../purchase/base/Purchase";
 import { Farmer } from "../../farmer/base/Farmer";
 import { OrderService } from "../order.service";
 @graphql.Resolver(() => Order)
@@ -108,6 +110,20 @@ export class OrderResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [Purchase], { name: "purchases" })
+  async findPurchases(
+    @graphql.Parent() parent: Order,
+    @graphql.Args() args: PurchaseFindManyArgs
+  ): Promise<Purchase[]> {
+    const results = await this.service.findPurchases(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 
   @graphql.ResolveField(() => Farmer, {

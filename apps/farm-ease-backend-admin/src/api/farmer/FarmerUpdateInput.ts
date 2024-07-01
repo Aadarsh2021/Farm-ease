@@ -1,4 +1,5 @@
 import { OrderUpdateManyWithoutFarmersInput } from "./OrderUpdateManyWithoutFarmersInput";
+import { ProfileUpdateManyWithoutFarmersInput } from "./ProfileUpdateManyWithoutFarmersInput";
 import { SalesUpdateManyWithoutFarmersInput } from "./SalesUpdateManyWithoutFarmersInput";
 
 export type FarmerUpdateInput = {
@@ -6,5 +7,6 @@ export type FarmerUpdateInput = {
   name?: string | null;
   orders?: OrderUpdateManyWithoutFarmersInput;
   phone?: string | null;
+  profiles?: ProfileUpdateManyWithoutFarmersInput;
   salesItems?: SalesUpdateManyWithoutFarmersInput;
 };

@@ -25,6 +25,9 @@ import { FarmerUpdateInput } from "./FarmerUpdateInput";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
 import { OrderWhereUniqueInput } from "../../order/base/OrderWhereUniqueInput";
+import { ProfileFindManyArgs } from "../../profile/base/ProfileFindManyArgs";
+import { Profile } from "../../profile/base/Profile";
+import { ProfileWhereUniqueInput } from "../../profile/base/ProfileWhereUniqueInput";
 import { SalesFindManyArgs } from "../../sales/base/SalesFindManyArgs";
 import { Sales } from "../../sales/base/Sales";
 import { SalesWhereUniqueInput } from "../../sales/base/SalesWhereUniqueInput";
@@ -221,6 +224,92 @@ export class FarmerControllerBase {
   ): Promise<void> {
     const data = {
       orders: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateFarmer({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Get("/:id/profiles")
+  @ApiNestedQuery(ProfileFindManyArgs)
+  async findProfiles(
+    @common.Req() request: Request,
+    @common.Param() params: FarmerWhereUniqueInput
+  ): Promise<Profile[]> {
+    const query = plainToClass(ProfileFindManyArgs, request.query);
+    const results = await this.service.findProfiles(params.id, {
+      ...query,
+      select: {
+        address: true,
+        createdAt: true,
+        dateOfBirth: true,
+
+        farmer: {
+          select: {
+            id: true,
+          },
+        },
+
+        firstName: true,
+        gender: true,
+        id: true,
+        lastName: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/profiles")
+  async connectProfiles(
+    @common.Param() params: FarmerWhereUniqueInput,
+    @common.Body() body: ProfileWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      profiles: {
+        connect: body,
+      },
+    };
+    await this.service.updateFarmer({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/profiles")
+  async updateProfiles(
+    @common.Param() params: FarmerWhereUniqueInput,
+    @common.Body() body: ProfileWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      profiles: {
+        set: body,
+      },
+    };
+    await this.service.updateFarmer({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/profiles")
+  async disconnectProfiles(
+    @common.Param() params: FarmerWhereUniqueInput,
+    @common.Body() body: ProfileWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      profiles: {
         disconnect: body,
       },
     };

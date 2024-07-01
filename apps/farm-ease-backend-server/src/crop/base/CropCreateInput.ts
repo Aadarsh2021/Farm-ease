@@ -11,8 +11,15 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsOptional, IsString, MaxLength } from "class-validator";
+import {
+  IsDate,
+  IsOptional,
+  IsString,
+  MaxLength,
+  ValidateNested,
+} from "class-validator";
 import { Type } from "class-transformer";
+import { ProductCreateNestedManyWithoutCropsInput } from "./ProductCreateNestedManyWithoutCropsInput";
 
 @InputType()
 class CropCreateInput {
@@ -49,6 +56,18 @@ class CropCreateInput {
     nullable: true,
   })
   plantingDate?: Date | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProductCreateNestedManyWithoutCropsInput,
+  })
+  @ValidateNested()
+  @Type(() => ProductCreateNestedManyWithoutCropsInput)
+  @IsOptional()
+  @Field(() => ProductCreateNestedManyWithoutCropsInput, {
+    nullable: true,
+  })
+  products?: ProductCreateNestedManyWithoutCropsInput;
 
   @ApiProperty({
     required: false,

@@ -20,6 +20,7 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { Order } from "../../order/base/Order";
+import { Profile } from "../../profile/base/Profile";
 import { Sales } from "../../sales/base/Sales";
 
 @ObjectType()
@@ -83,6 +84,15 @@ class Farmer {
     nullable: true,
   })
   phone!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Profile],
+  })
+  @ValidateNested()
+  @Type(() => Profile)
+  @IsOptional()
+  profiles?: Array<Profile>;
 
   @ApiProperty({
     required: false,
