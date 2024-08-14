@@ -6,6 +6,7 @@
         "start": "node api/app.js"
     },
     "dependencies": {
+        "@vercel/speed-insights": "^1.0.12",
         "bcryptjs": "^2.4.3",
         "dotenv": "^16.0.0",
         "express": "^4.17.1",
