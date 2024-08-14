@@ -13,22 +13,27 @@ app.use(express.static(path.join(__dirname, 'Public')));
 app.use(express.json());
 
 // Initialize MySQL connection
+let db;
+
 async function initDB() {
     try {
-        const connection = await mysql.createConnection({
+        db = await mysql.createPool({
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
             password: process.env.DB_PASS,
-            database: process.env.DB_NAME
+            database: process.env.DB_NAME,
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0
         });
         console.log('Database connection successful');
-        return connection;
     } catch (error) {
         console.error('Error connecting to MySQL database:', error);
+        process.exit(1); // Exit the process if database connection fails
     }
 }
 
-const db = initDB();
+initDB();
 
 // Route for serving home page
 app.get('/', (req, res) => {
@@ -66,15 +71,14 @@ app.post('/api/signup/customer', [
 
     try {
         const { fullName, address, email, password } = req.body;
-        const connection = await db;
-        const [existingUser] = await connection.query('SELECT * FROM users WHERE email = ?', [email]);
+        const [existingUser] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
 
         if (existingUser.length > 0) {
             return res.status(400).json({ message: 'User already exists! Please Sign in' });
         }
 
         const hashedPassword = await bcryptjs.hash(password, saltRounds);
-        await connection.query(
+        await db.query(
             'INSERT INTO users (fullName, address, email, password, userType) VALUES (?, ?, ?, ?, ?)',
             [fullName, address, email, hashedPassword, 'customer']
         );
@@ -98,8 +102,7 @@ app.post('/api/signin', [
 
     try {
         const { email, password } = req.body;
-        const connection = await db;
-        const [userData] = await connection.query('SELECT * FROM users WHERE email = ?', [email]);
+        const [userData] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
 
         if (userData.length === 0) {
             return res.status(404).send('User not found');
