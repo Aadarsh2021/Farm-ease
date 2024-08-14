@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mysql = require('mysql2/promise');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 require('dotenv').config();
 
@@ -21,11 +21,10 @@ async function initDB() {
             password: process.env.DB_PASS,
             database: process.env.DB_NAME
         });
-        console.log('Connected to MySQL database successfully!');
+        console.log('Database connection successful');
         return connection;
     } catch (error) {
         console.error('Error connecting to MySQL database:', error);
-        throw error;
     }
 }
 
@@ -74,7 +73,7 @@ app.post('/api/signup/customer', [
             return res.status(400).json({ message: 'User already exists! Please Sign in' });
         }
 
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const hashedPassword = await bcryptjs.hash(password, saltRounds);
         await connection.query(
             'INSERT INTO users (fullName, address, email, password, userType) VALUES (?, ?, ?, ?, ?)',
             [fullName, address, email, hashedPassword, 'customer']
@@ -107,7 +106,7 @@ app.post('/api/signin', [
         }
 
         const hashedPassword = userData[0].password;
-        const match = await bcrypt.compare(password, hashedPassword);
+        const match = await bcryptjs.compare(password, hashedPassword);
 
         if (match) {
             return res.status(200).json(userData[0]);
