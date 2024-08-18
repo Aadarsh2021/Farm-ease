@@ -1,0 +1,106 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Sales {
+  amount    Float?
+  createdAt DateTime  @default(now())
+  farmer    Farmer?   @relation(fields: [farmerId], references: [id])
+  farmerId  String?
+  id        String    @id @default(cuid())
+  quantity  Int?
+  saleDate  DateTime?
+  updatedAt DateTime  @updatedAt
+}
+
+model Farmer {
+  createdAt  DateTime  @default(now())
+  email      String?
+  id         String    @id @default(cuid())
+  name       String?
+  orders     Order[]
+  phone      String?
+  profiles   Profile[]
+  salesItems Sales[]
+  updatedAt  DateTime  @updatedAt
+}
+
+model Crop {
+  createdAt    DateTime  @default(now())
+  harvestDate  DateTime?
+  id           String    @id @default(cuid())
+  name         String?
+  plantingDate DateTime?
+  products     Product[]
+  typeField    String?
+  updatedAt    DateTime  @updatedAt
+}
+
+model Order {
+  createdAt   DateTime   @default(now())
+  farmer      Farmer?    @relation(fields: [farmerId], references: [id])
+  farmerId    String?
+  id          String     @id @default(cuid())
+  orderDate   DateTime?
+  purchases   Purchase[]
+  totalAmount Float?
+  updatedAt   DateTime   @updatedAt
+}
+
+model Message {
+  content    String?
+  createdAt  DateTime  @default(now())
+  id         String    @id @default(cuid())
+  receiverId String?
+  senderId   String?
+  sentAt     DateTime?
+  updatedAt  DateTime  @updatedAt
+}
+
+model Product {
+  createdAt   DateTime   @default(now())
+  crop        Crop?      @relation(fields: [cropId], references: [id])
+  cropId      String?
+  description String?
+  id          String     @id @default(cuid())
+  name        String?
+  price       Float?
+  purchases   Purchase[]
+  stock       Int?
+  updatedAt   DateTime   @updatedAt
+}
+
+model Purchase {
+  createdAt    DateTime  @default(now())
+  id           String    @id @default(cuid())
+  order        Order?    @relation(fields: [orderId], references: [id])
+  orderId      String?
+  product      Product?  @relation(fields: [productId], references: [id])
+  productId    String?
+  purchaseDate DateTime?
+  quantity     Int?
+  totalPrice   Float?
+  updatedAt    DateTime  @updatedAt
+}
+
+model Profile {
+  address     String?
+  createdAt   DateTime           @default(now())
+  dateOfBirth DateTime?
+  farmer      Farmer?            @relation(fields: [farmerId], references: [id])
+  farmerId    String?
+  firstName   String?
+  gender      EnumProfileGender?
+  id          String             @id @default(cuid())
+  lastName    String?
+  updatedAt   DateTime           @updatedAt
+}
+
+enum EnumProfileGender {
+  Option1
+}
