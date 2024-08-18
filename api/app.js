@@ -3,10 +3,24 @@ const path = require('path');
 const mysql = require('mysql2/promise');
 const bcryptjs = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Use helmet to set security headers
+app.use(helmet());
+
+// Create a rate limiter
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+});
+
+// Apply the rate limiter to all requests
+app.use(limiter);
 
 // Serve static files from the Public directory
 app.use(express.static(path.join(__dirname, 'Public')));
@@ -35,22 +49,19 @@ async function initDB() {
 
 initDB();
 
-// Route for serving home page
+// Routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public', 'home.html'));
 });
 
-// Route for serving customer signup page
 app.get('/signup_customer.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public', 'signup_customer.html'));
 });
 
-// Route for serving signin page
 app.get('/signin.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public', 'signin.html'));
 });
 
-// Route for serving dashboard page
 app.get('/dashboard.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public', 'dashboard.html'));
 });
@@ -122,6 +133,7 @@ app.post('/api/signin', [
     }
 });
 
+// Error handling middleware
 app.use((err, req, res, next) => {
     console.error('Error stack:', err.stack);
     console.error('Error message:', err.message);
